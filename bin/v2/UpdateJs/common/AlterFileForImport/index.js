@@ -8,13 +8,11 @@ import getStory from "pattern-collector-anyjs";
 
 const alterFile = ({
     jsFilePath,
-    toInsertLine,
-    duplicationCheck,
-    insertAfter = [],
+    toInsertLine, extractRegex,
     showLog = false,
-    extractRegex, showLogStep1, showLogStep2, showLogStep3
+    showLogStep1, showLogStep2, showLogStep3
 }) => {
-    if (showLog) console.log("inputs : ", jsFilePath, toInsertLine, duplicationCheck, insertAfter);
+    if (showLog) console.log("inputs : ", jsFilePath, toInsertLine);
 
     const content = readFile(jsFilePath);
 
