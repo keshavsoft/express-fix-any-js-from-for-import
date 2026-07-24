@@ -29,7 +29,7 @@ jobs:
 
       - run: npm install
 
-      - run: npm install express-check-any-for-import@latest
+      - run: npm install express-check-any-for-import@latest pattern-collector-anyjs@latest pattern-collector-base-regex@latest
 
       - name: Check for updates
         id: check
@@ -50,7 +50,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add package.json package-lock.json
-          git commit -m "Update express-check-any-for-import to latest and bump version"
+          git commit -m "chore: update dependencies and bump version"
           git push
 
       - name: Publish to NPM
