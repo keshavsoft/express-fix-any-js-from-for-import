@@ -1,12 +1,11 @@
 const checkUseDuplicate = ({ inSearchText, inFileContentAsStory }) => {
 
     const found = inFileContentAsStory.find(element => {
-        console.log("element : ", element);
-
         return element.folderName === inSearchText;
     });
 
     return {
+        inserted: false,
         found,
         lineNumber: found ? found.lineNumber : null
     };

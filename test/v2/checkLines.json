@@ -1,5 +1,5 @@
 {
-    "toInsertLine": "import { router as routerFromv3 } from './v3/routes.js';",
+    "toInsertLine": "import { router as routerFromv4 } from './v4/routes.js';",
     "duplicationCheck": "v3",
     "toCheckRaka": true,
     "toCheckPoka": false

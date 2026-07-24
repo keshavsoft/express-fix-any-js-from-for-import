@@ -16,7 +16,7 @@ const updateAppJs = ({ inJsFilePath, inCheckLines, extractRegex,
         showLog, showLogStep1, showLogStep2, showLogStep3
     });
 
-    return { importResult };
+    return importResult;
 };
 
 export default updateAppJs;

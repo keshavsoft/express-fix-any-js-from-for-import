@@ -22,15 +22,19 @@ const alterFile = ({
 
     const fromPatternCollector = getStory({
         fileContent: content,
-        extractRegex,
+        extractRegex: {
+            importRegex: extractRegex
+        },
         showLog: showLogStep1,
         showLogStep1: showLogStep2, showLogStep3
     });
 
     const duplicateInfo = checkDuplicate({
-        inSearchText: duplicationCheck,
+        inSearchText: lineStory.raka,
         inFileContentAsStory: fromPatternCollector.importLines
     });
+
+    // console.log("----------- : ", toInsertLine, lineStory, duplicateInfo);
 
     if (duplicateInfo.found) {
         if (showLog) {
@@ -49,6 +53,7 @@ const alterFile = ({
     });
 
     return {
+        inserted: true,
         found: false,
         filePath: jsFilePath,
         lineNumber: null

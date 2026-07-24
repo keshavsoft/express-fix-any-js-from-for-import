@@ -2,13 +2,18 @@ import fs from "fs";
 import readFile from "./readFile.js";
 
 const writeFile = ({ inJsFilePath, inInsertLineIndex, toInsertLine }) => {
-    const content = readFile(inJsFilePath);
+    try {
+        const content = readFile(inJsFilePath);
 
-    const lines = content.split("\n");
+        const lines = content.split("\n");
 
-    const updatedLines = lines.toSpliced(inInsertLineIndex - 1, 0, toInsertLine);
+        const updatedLines = lines.toSpliced(inInsertLineIndex - 1, 0, toInsertLine);
 
-    fs.writeFileSync(inJsFilePath, updatedLines.join("\n"));
+        fs.writeFileSync(inJsFilePath, updatedLines.join("\n"));
+
+    } catch (error) {
+        return error;
+    };
 };
 
 export default writeFile;
