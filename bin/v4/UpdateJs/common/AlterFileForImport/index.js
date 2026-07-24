@@ -1,38 +1,44 @@
+import getStory from "pattern-collector-anyjs";
+
 import readFile from "../readFile.js";
 import checkDuplicate from "./checkDuplicate.js";
 import writeFile from "../writeFile.js";
 import getLineStory from "./toInsertLineStory.js";
 
-import getStory from "pattern-collector-anyjs";
+import packageJson from '../../../../../package.json' with {type: 'json'};
 
 const alterFile = ({
     jsFilePath,
-    toInsertLine, parseRegex, searchString,
+    toInsertLine, parseRegex, searchRegex,
     showLog = false, showLogStep1, showLogStep2, showLogStep3
 }) => {
-    if (showLog) console.log("inputs : ", jsFilePath, toInsertLine, parseRegex, searchString);
+
+    if (showLog?.keysOnly) console.log(`${packageJson.name}-start`);
+    if (showLog?.withValues) console.log(`${packageJson.name}-inputs : `, jsFilePath, toInsertLine, parseRegex, searchRegex);
 
     const content = readFile(jsFilePath);
 
     const lineStory = getLineStory({ toInsertLine, parseRegex, showLog });
 
+    if (showLog?.withValues) console.log(`${packageJson.name}-lineStory : `, lineStory);
+
     const fromPatternCollector = getStory({
         fileContent: content,
         extractRegex: {
             importRegex: {
-                parseRegex, searchString
+                parseRegex, searchRegex
             }
         },
         showLog: showLogStep1,
-        showLogStep1: showLogStep2, showLogStep3
+        showLogStep1: showLogStep2, showLogStep2: showLogStep3
     });
+
+    if (showLog?.withValues) console.log(`${packageJson.name}-fromPatternCollector : `, fromPatternCollector);
 
     const duplicateInfo = checkDuplicate({
         inSearchText: lineStory.raka,
         inFileContentAsStory: fromPatternCollector.importLines
     });
-
-    // console.log("----------- : ", toInsertLine, lineStory, duplicateInfo);
 
     if (duplicateInfo.found) {
         if (showLog) {
@@ -49,6 +55,9 @@ const alterFile = ({
         inInsertLineIndex: fromPatternCollector.summary.importSummary.minLineNumber,
         toInsertLine
     });
+
+    if (showLog?.keysOnly) console.log(`${packageJson.name}-end`);
+    if (showLog?.withValues) console.log(`${packageJson.name}-outputs : `, duplicateInfo);
 
     return {
         inserted: true,

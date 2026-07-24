@@ -1,15 +1,17 @@
 import baseRegex from "pattern-collector-base-regex";
 
-const startFunc = ({ toInsertLine, parseRegex, showLog = false }) => {
+import packageJson from '../../../../../package.json' with {type: 'json'};
 
-    if (showLog) console.log("toInsertLineStory-inputs : ", parseRegex, toInsertLine);
+const startFunc = ({ toInsertLine, parseRegex, showLog }) => {
+
+    if (showLog?.withValues) console.log(`${packageJson.name}-toInsertLineStory-inputs : `, parseRegex, toInsertLine);
 
     const fromPatternCollector = baseRegex({
         matchLine: toInsertLine,
         parseRegex, showLog
     });
 
-    if (showLog) console.log("toInsertLineStory-outputs : ", fromPatternCollector);
+    if (showLog?.withValues) console.log(`${packageJson.name}-toInsertLineStory-outputs : `, fromPatternCollector);
 
     return fromPatternCollector;
 };

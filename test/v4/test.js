@@ -15,11 +15,23 @@ function runTests() {
         jsFilePath: appJsPath,
         toInsertLine,
         parseRegex: extractRegex.parseRegex,
-        searchString: extractRegex.searchString,
-        showLog: false,
-        showLogStep1: false,
-        showLogStep2: false,
-        showLogStep3: false
+        searchRegex: extractRegex.searchRegex,
+        showLog: {
+            keysOnly: false,
+            withValues: true
+        },
+        showLogStep1: {
+            keysOnly: false,
+            withValues: false
+        },
+        showLogStep2: {
+            keysOnly: false,
+            withValues: false
+        },
+        showLogStep3: {
+            keysOnly: false,
+            withValues: false
+        }
     });
 
     console.log("output : ", output);
