@@ -1,0 +1,6 @@
+{
+    "toInsertLine1": "router.use('/v5', routerFromv5);",
+    "toInsertLine": "import { router as routerFromv5 } from './v5/routes.js';",
+    "toInsertRule1": "defaultBefore",
+    "toInsertRule": "defaultAfter"
+}
