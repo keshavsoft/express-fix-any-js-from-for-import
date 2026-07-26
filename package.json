@@ -1,6 +1,6 @@
 {
   "name": "express-fix-any-js-from-for-import",
-  "version": "1.6.6",
+  "version": "1.7.1",
   "description": "CLI to build for appjs, the endpoints",
   "keywords": [
     "cli",
