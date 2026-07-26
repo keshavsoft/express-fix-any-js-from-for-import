@@ -1,8 +1,14 @@
 import fs from "fs";
 import readFile from "./readFile.js";
 
-const writeFile = ({ inJsFilePath, inInsertLineIndex, toInsertLine }) => {
+const writeFile = ({ inJsFilePath, inInsertLineIndex, toInsertLine,
+    emptyBefore = false, emptyAfter = false
+}) => {
     try {
+        if (emptyBefore) {
+            toInsertLine = "\n".concat(toInsertLine);
+        };
+
         const content = readFile(inJsFilePath);
 
         const lines = content.split("\n");

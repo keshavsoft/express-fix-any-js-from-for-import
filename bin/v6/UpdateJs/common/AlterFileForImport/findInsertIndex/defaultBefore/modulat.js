@@ -1,21 +1,24 @@
-const getFromSummary = (inSummary) => {
+const startFunc = ({ inSummary, inKeyInSummary }) => {
     let index = null;
+    let emptyBefore = false;
 
-    if (inSummary?.exportSummary) {
-        const minLine = inSummary?.exportSummary?.minLineNumber;
-        if (minLine !== Infinity) {
-            index = minLine;
+    if (inSummary.importSummary?.lineCount === 0) {
+
+        if (inSummary.importFromNpmSummary?.lineCount === 0) {
+            index = 1;
+        } else {
+            emptyBefore = true;
+            index = inSummary.importFromNpmSummary?.maxLineNumber + 1;
         };
+
+    } else {
+        index = inSummary.importSummary?.minLineNumber;
     };
 
-    if (inSummary?.consumeSummary) {
-        const minLine = inSummary?.consumeSummary?.minLineNumber;
-        if (minLine !== Infinity) {
-            index = minLine;
-        };
+    return {
+        emptyBefore,
+        index
     };
-
-    return index;
 };
 
-export default getFromSummary;
+export default startFunc;

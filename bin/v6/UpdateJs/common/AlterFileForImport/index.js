@@ -5,21 +5,18 @@ import checkDuplicate from "./checkDuplicate.js";
 import findInsertIndex from "./findInsertIndex/index.js";
 import writeFile from "../writeFile.js";
 import getLineStory from "./toInsertLineStory.js";
+import atStart from "./showLogs/atStart.js";
+import atEnd from "./showLogs/atEnd.js";
 
 import packageJson from '../../../../../package.json' with {type: 'json'};
 
 const alterFile = ({
     jsFilePath, rulesJson, extractRegex, inParseRegex,
-    toCheckLinesName,
+    toCheckLinesName, inKeyInSummary,
     showLog = false, showLogStep1, showLogStep2, showLogStep3
 }) => {
 
-    if (showLog?.keysOnly) console.log(`${packageJson.name}-start`);
-
-    if (showLog?.withValues) console.log(`${packageJson.name}-inputs-jsFilePath : `, jsFilePath);
-    if (showLog?.withValues) console.log(`${packageJson.name}-inputs-rulesJson : `, JSON.stringify(rulesJson));
-    if (showLog?.withValues) console.log(`${packageJson.name}-inputs-parseRegex : `, JSON.stringify(parseRegex));
-    if (showLog?.withValues) console.log(`${packageJson.name}-inputs-searchRegex : `, JSON.stringify(searchRegex));
+    atStart({ jsFilePath, rulesJson, packageJson, showLog, parseRegex: inParseRegex, searchRegex: extractRegex });
 
     const toInsertLine = rulesJson.toInsertLine;
 
@@ -38,16 +35,15 @@ const alterFile = ({
         showLogStep1: showLogStep2, showLogStep2: showLogStep3
     });
 
-    if (showLog?.withValues) console.log(`${packageJson.name}-fromPatternCollector : `, fromPatternCollector);
+    // console.log(`-fromPatternCollector : `, fromPatternCollector.importLines);
 
-    // console.log(`-------------------- : `, fromPatternCollector);
+    if (showLog?.withValues) console.log(`${packageJson.name}------------ : `, fromPatternCollector);
+
 
     const duplicateInfo = checkDuplicate({
         inSearchText: lineStory.raka,
         inFileContentAsStory: fromPatternCollector[toCheckLinesName]
     });
-
-    // console.log("----------- : ", duplicateInfo);
 
     if (duplicateInfo.found) {
         if (showLog) {
@@ -62,19 +58,16 @@ const alterFile = ({
     const toInsertIndex = findInsertIndex({
         inAllLinesStory: fromPatternCollector.allLinesStory,
         inSummary: fromPatternCollector?.summary,
-        rulesJson
+        rulesJson, inKeyInSummary
     });
-
-    // console.log(`toInsertIndex------------- : `, toInsertIndex);
 
     writeFile({
         inJsFilePath: jsFilePath,
-        inInsertLineIndex: toInsertIndex,
-        toInsertLine
+        inInsertLineIndex: toInsertIndex.index,
+        toInsertLine, emptyBefore: toInsertIndex.emptyBefore
     });
 
-    if (showLog?.keysOnly) console.log(`${packageJson.name}-end`);
-    if (showLog?.withValues) console.log(`${packageJson.name}-outputs : `, duplicateInfo);
+    atEnd({ duplicateInfo, packageJson, showLog });
 
     return {
         inserted: true,

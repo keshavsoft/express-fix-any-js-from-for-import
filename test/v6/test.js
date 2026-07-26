@@ -14,7 +14,7 @@ function runTests() {
     const output = index({
         jsFilePath: appJsPath,
         rulesJson,
-        extractRegex,
+        extractRegex, inKeyInSummary: "importSummary",
         toCheckLinesName: "importLines",
         inParseRegex: extractRegex.importRegex.parseRegex,
         showLog: {
@@ -35,7 +35,7 @@ function runTests() {
         }
     });
 
-    console.log("output : ", output);
+    // console.log("output : ", output);
 };
 
 runTests();
