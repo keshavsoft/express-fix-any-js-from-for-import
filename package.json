@@ -1,6 +1,6 @@
 {
   "name": "express-fix-any-js-from-for-import",
-  "version": "1.8.11",
+  "version": "1.8.12",
   "description": "CLI to build for appjs, the endpoints",
   "keywords": [
     "cli",
@@ -12,7 +12,7 @@
   "dependencies": {
     "express-check-any-for-import": "^1.4.7",
     "express-fix-any-js-from-base": "^1.2.5",
-    "pattern-collector-anyjs": "^1.9.11",
+    "pattern-collector-anyjs": "^1.9.12",
     "pattern-collector-base-regex": "^1.6.3"
   },
   "type": "module",
